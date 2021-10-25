@@ -18,18 +18,18 @@ then with one.
 
 A `Stack` is a linear data structure that allows you to store a list of data of
 some sort, and to add and remove values. Values in the stack are processed in
-`First In, Last Out` (FILO) order. In other words, the value that was added to
+**First In, Last Out** (FILO) order. In other words, the value that was added to
 the `Stack` most recently will be the first one removed. This can be contrasted
-with another similar data structure, a `Queue`, which is processed in `First In,
-First Out` (FIFO) order.
+with another similar data structure, a `Queue`, which is processed in **First In,
+First Out** (FIFO) order.
 
 If we consider an airport security checkpoint as a real world example, the stack
 of bins is our `Stack`: when a passenger grabs a bin from the stack, it's the
-last bin that was added; in other words, `First In, Last Out`. (You can also
-think of it as `Last In, First Out`; the two terms are equivalent.) The line of
-passengers waiting to pass through security would be our `Queue`: the first
-person to join the line will be the first one through the checkpoint (`First In,
-First Out`).
+last bin that was added; in other words, **First In, Last Out**. (You can also
+think of it as **Last In, First Out**; the two terms are equivalent.) The line
+of passengers waiting to pass through security would be our `Queue`: the first
+person to join the line will be the first one through the checkpoint
+(`First In, First Out`).
 
 It can be useful to think of a `Stack` as a vertical structure, like a stack of
 plates: we generally refer to adding items to, and removing them from, the _top_
@@ -54,26 +54,26 @@ lesson.
 The implementation of a `Stack` will vary depending on what's needed, but, at a
 minimum, generally includes the following methods:
 
-- `push()`: add an element to the top of the stack
-- `pop()`: remove the element at the top of the stack
-- `peek()` (or `top()`): return the value of the element at the top of the stack
+- `push`: add an element to the top of the stack
+- `pop`: remove the element at the top of the stack
+- `peek` (or `top`): return the value of the element at the top of the stack
   without removing it
 
 In some implementations, you might also want to include a `limit` attribute,
 to indicate the maximum size of the `Stack`.
 
-> Fun Fact: the phrase `stack overflow` was originally coined to describe the
+> Fun Fact: the phrase **stack overflow** was originally coined to describe the
 > situation of trying to push an item to a full `Stack` — it isn't just a place
 > to find answers to coding questions! The reverse situation — trying to pop
-> an item off of an empty `Stack` — is referred to as `stack underflow`.
+> an item off of an empty `Stack` — is referred to as **stack underflow**.
 
 Some other common methods you might see implemented include:
 
-- `isEmpty()`/`isFull()`: return true if the `Stack` is empty/full; false
+- `empty?`/`full?`: return true if the `Stack` is empty/full; false
   otherwise
-- `search(value)`: return the distance between the top of the stack and the
+- `search(target)`: return the distance between the top of the stack and the
   target element if it's present; -1 otherwise
-- `size()`: return the number of elements contained in the `Stack`
+- `size`: return the number of elements contained in the `Stack`
 
 Other methods are possible as well, of course: the methods the developer chooses
 to define in a given implementation of a `Stack` will depend on their particular
@@ -87,7 +87,7 @@ there's no reason you can't!
 
 ### Time Complexity of Stack Methods
 
-With the exception of `search()`, all of the `Stack` methods listed above (for
+With the exception of `search`, all of the `Stack` methods listed above (for
 example, pushing an element onto the `Stack`) have time complexity of O(1). In
 many practical uses, you may iterate through some input, adding or removing
 items as you go. This process has linear complexity: one step for each element
@@ -138,12 +138,12 @@ There are many ways to approach computing the factorial of a number; one
 possible solution might look like this:
 
 ```rb
-def factorial(n) 
+def factorial(n)
   result = 1
   while n > 1 do
     result *= n
-    n-=1
-  end 
+    n -= 1
+  end
   result
 end
 
@@ -162,15 +162,15 @@ next lesson), we can capture the behavior of one by using the Ruby `Array`
 Using a `Stack`, our solution might look like this:
 
 ```rb
-def factorial(n) 
+def factorial(n)
   stack = []
-  result = 1;
+  result = 1
   while n > 1 do
     stack.push(n)
-    n-=1
-  end 
-  while !stack.empty? do
-    result *= stack.pop();
+    n -= 1
+  end
+  until stack.empty? do
+    result *= stack.pop
   end
   result
 end
@@ -209,5 +209,4 @@ next lesson, you'll tackle implementing a `Stack`.
 - [Wikipedia: Stack (abstract data type)][stack]
 
 [stack]: https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
-
 [call-stack]: https://en.wikipedia.org/wiki/Call_stack

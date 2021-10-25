@@ -103,6 +103,23 @@ of O(n). Then, you would loop through the `Stack` to pop each character off and
 add it to the reversed string, again yielding a time complexity of O(n). This
 gives O(2n), which simplifies to O(n).
 
+```rb
+def reverse_string(string)
+  stack = []
+  string.chars.each do |char|
+    stack.push(char)
+  end
+  reversed = ""
+  until stack.empty? do
+    reversed += stack.pop
+  end
+  reversed
+end
+
+reverse_string("hello")
+# => "olleh"
+```
+
 With the above example, there is no real benefit in terms of time efficiency to
 using a `Stack` instead of simple iteration. However, the use of a `Stack` can
 be substantially more efficient with certain types of problems that would
@@ -116,7 +133,7 @@ There are a number of practical use cases for a `Stack`. Some common ones includ
 
 - The [call stack][call-stack] in computing
 - Code compilers checking if brackets are balanced when a program is run
-- Browser back/forward buttons
+- Browser history and back/forward buttons
 - Undo/redo in software programs
 
 A `Stack` can also be used to help traverse more complex data structures known
@@ -132,7 +149,7 @@ problem.
 In math, the factorial of an integer `n` (expressed as `n!`) is equal to the
 product of all integers from `n` down to 1:
 
-```
+```txt
 n! = n * (n-1) * (n-2) ... * 1
 ```
 

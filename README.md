@@ -35,19 +35,23 @@ It can be useful to think of a `Stack` as a vertical structure, like a stack of
 plates: we generally refer to adding items to, and removing them from, the _top_
 of the `Stack`.
 
+<!-- TODO: Add image here to visualize stack -->
+
 ### Stack vs. Array
 
 You may be wondering why we wouldn't just use an array instead of implementing a
-stack. After all, arrays are also used to store a list of data, and also allow
-you to add and remove values. In fact, one way to implement a Stack (although
+`Stack`. After all, arrays are also used to store a list of data, and also allow
+you to add and remove values. In fact, one way to implement a `Stack` (although
 not generally the best way) is by using an array as the underlying data
 structure — you'll be doing that in the next lesson.
 
-The problem is that arrays are expensive in terms of memory. If the problem
-you're solving only requires a few of the capabilities of an array, implementing
-a stack using a different underlying data structure can improve the space
-efficiency of your code. We'll learn about a better option in an upcoming
-lesson.
+`Stack`s have a few benefits for certain problems when compared to arrays.
+`Stack`s have a more limited set of methods for interacting with data compared
+to arrays — with a `Stack`, you can only interact with the element at the _top_,
+where as arrays also allow you to access and interact with elements at any
+random position. This restriction is actually a good thing when it comes to
+solving certain kinds of problems, since it can guide you to a more elegant and
+easy-to-understand solution.
 
 ## Stack Methods
 

@@ -18,62 +18,66 @@ then with one.
 
 A `Stack` is a linear data structure that allows you to store a list of data of
 some sort, and to add and remove values. Values in the stack are processed in
-`First In, Last Out` (FILO) order. In other words, the value that was added to
+**First In, Last Out** (FILO) order. In other words, the value that was added to
 the `Stack` most recently will be the first one removed. This can be contrasted
-with another similar data structure, a `Queue`, which is processed in `First In,
-First Out` (FIFO) order.
+with another similar data structure, a `Queue`, which is processed in **First In,
+First Out** (FIFO) order.
 
 If we consider an airport security checkpoint as a real world example, the stack
 of bins is our `Stack`: when a passenger grabs a bin from the stack, it's the
-last bin that was added; in other words, `First In, Last Out`. (You can also
-think of it as `Last In, First Out`; the two terms are equivalent.) The line of
-passengers waiting to pass through security would be our `Queue`: the first
-person to join the line will be the first one through the checkpoint (`First In,
-First Out`).
+last bin that was added; in other words, **First In, Last Out**. (You can also
+think of it as **Last In, First Out**; the two terms are equivalent.) The line
+of passengers waiting to pass through security would be our `Queue`: the first
+person to join the line will be the first one through the checkpoint
+(`First In, First Out`).
 
 It can be useful to think of a `Stack` as a vertical structure, like a stack of
 plates: we generally refer to adding items to, and removing them from, the _top_
 of the `Stack`.
 
+<!-- TODO: Add image here to visualize stack -->
+
 ### Stack vs. Array
 
 You may be wondering why we wouldn't just use an array instead of implementing a
-stack. After all, arrays are also used to store a list of data, and also allow
-you to add and remove values. In fact, one way to implement a Stack (although
+`Stack`. After all, arrays are also used to store a list of data, and also allow
+you to add and remove values. In fact, one way to implement a `Stack` (although
 not generally the best way) is by using an array as the underlying data
 structure — you'll be doing that in the next lesson.
 
-The problem is that arrays are expensive in terms of memory. If the problem
-you're solving only requires a few of the capabilities of an array, implementing
-a stack using a different underlying data structure can improve the space
-efficiency of your code. We'll learn about a better option in an upcoming
-lesson.
+`Stack`s have a few benefits for certain problems when compared to arrays.
+`Stack`s have a more limited set of methods for interacting with data compared
+to arrays — with a `Stack`, you can only interact with the element at the _top_,
+where as arrays also allow you to access and interact with elements at any
+random position. This restriction is actually a good thing when it comes to
+solving certain kinds of problems, since it can guide you to a more elegant and
+easy-to-understand solution.
 
 ## Stack Methods
 
 The implementation of a `Stack` will vary depending on what's needed, but, at a
 minimum, generally includes the following methods:
 
-- `push()`: add an element to the top of the stack
-- `pop()`: remove the element at the top of the stack
-- `peek()` (or `top()`): return the value of the element at the top of the stack
+- `push`: add an element to the top of the stack
+- `pop`: remove the element at the top of the stack
+- `peek` (or `top`): return the value of the element at the top of the stack
   without removing it
 
 In some implementations, you might also want to include a `limit` attribute,
 to indicate the maximum size of the `Stack`.
 
-> Fun Fact: the phrase `stack overflow` was originally coined to describe the
+> Fun Fact: the phrase **stack overflow** was originally coined to describe the
 > situation of trying to push an item to a full `Stack` — it isn't just a place
 > to find answers to coding questions! The reverse situation — trying to pop
-> an item off of an empty `Stack` — is referred to as `stack underflow`.
+> an item off of an empty `Stack` — is referred to as **stack underflow**.
 
 Some other common methods you might see implemented include:
 
-- `isEmpty()`/`isFull()`: return true if the `Stack` is empty/full; false
+- `empty?`/`full?`: return true if the `Stack` is empty/full; false
   otherwise
-- `search(value)`: return the distance between the top of the stack and the
+- `search(target)`: return the distance between the top of the stack and the
   target element if it's present; -1 otherwise
-- `size()`: return the number of elements contained in the `Stack`
+- `size`: return the number of elements contained in the `Stack`
 
 Other methods are possible as well, of course: the methods the developer chooses
 to define in a given implementation of a `Stack` will depend on their particular
@@ -87,7 +91,7 @@ there's no reason you can't!
 
 ### Time Complexity of Stack Methods
 
-With the exception of `search()`, all of the `Stack` methods listed above (for
+With the exception of `search`, all of the `Stack` methods listed above (for
 example, pushing an element onto the `Stack`) have time complexity of O(1). In
 many practical uses, you may iterate through some input, adding or removing
 items as you go. This process has linear complexity: one step for each element
@@ -98,6 +102,23 @@ the string and add each character to the `Stack`, which has a time complexity
 of O(n). Then, you would loop through the `Stack` to pop each character off and
 add it to the reversed string, again yielding a time complexity of O(n). This
 gives O(2n), which simplifies to O(n).
+
+```rb
+def reverse_string(string)
+  stack = []
+  string.chars.each do |char|
+    stack.push(char)
+  end
+  reversed = ""
+  until stack.empty? do
+    reversed += stack.pop
+  end
+  reversed
+end
+
+reverse_string("hello")
+# => "olleh"
+```
 
 With the above example, there is no real benefit in terms of time efficiency to
 using a `Stack` instead of simple iteration. However, the use of a `Stack` can
@@ -112,7 +133,7 @@ There are a number of practical use cases for a `Stack`. Some common ones includ
 
 - The [call stack][call-stack] in computing
 - Code compilers checking if brackets are balanced when a program is run
-- Browser back/forward buttons
+- Browser history and back/forward buttons
 - Undo/redo in software programs
 
 A `Stack` can also be used to help traverse more complex data structures known
@@ -128,7 +149,7 @@ problem.
 In math, the factorial of an integer `n` (expressed as `n!`) is equal to the
 product of all integers from `n` down to 1:
 
-```
+```txt
 n! = n * (n-1) * (n-2) ... * 1
 ```
 
@@ -138,12 +159,12 @@ There are many ways to approach computing the factorial of a number; one
 possible solution might look like this:
 
 ```rb
-def factorial(n) 
+def factorial(n)
   result = 1
   while n > 1 do
     result *= n
-    n-=1
-  end 
+    n -= 1
+  end
   result
 end
 
@@ -162,15 +183,15 @@ next lesson), we can capture the behavior of one by using the Ruby `Array`
 Using a `Stack`, our solution might look like this:
 
 ```rb
-def factorial(n) 
+def factorial(n)
   stack = []
-  result = 1;
+  result = 1
   while n > 1 do
     stack.push(n)
-    n-=1
-  end 
-  while !stack.empty? do
-    result *= stack.pop();
+    n -= 1
+  end
+  until stack.empty? do
+    result *= stack.pop
   end
   result
 end
@@ -209,5 +230,4 @@ next lesson, you'll tackle implementing a `Stack`.
 - [Wikipedia: Stack (abstract data type)][stack]
 
 [stack]: https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
-
 [call-stack]: https://en.wikipedia.org/wiki/Call_stack

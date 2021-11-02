@@ -138,79 +138,95 @@ through a `Tree`.
 Let's take a look at an example to see how we might use a `Stack` in solving a
 problem.
 
-In math, the factorial of an integer `n` (expressed as `n!`) is equal to the
-product of all integers from `n` down to 1:
+We want to write an `evaluate_keystrokes` method that will take as input a
+string that represents a series of keystrokes. The string may contain some
+number of occurrences of the `<` character, which indicates a backspace. We want
+our method to return the "interpreted" version of the string.
 
-```txt
-n! = n * (n-1) * (n-2) ... * 1
-```
-
-So the factorial of 4 would be `4 * 3 * 2 * 1`, or 24.
-
-There are many ways to approach computing the factorial of a number; one
-possible solution might look like this:
+For example:
 
 ```rb
-def factorial(n)
-  result = 1
-  while n > 1 do
-    result *= n
-    n -= 1
+evaluate_keystrokes('abcde<fg<h')
+# => 'abcdfh'
+
+evaluate_keystrokes('abcd<<<fg<h')
+# => 'afh'
+```
+
+A solution that doesn't use a `Stack` might look something like this:
+
+```rb
+def evaluate_keystrokes(str)
+  i = str.size - 1
+  result = ""
+  skip = 0
+
+  while i >= 0
+    if str[i] == "<"
+      skip += 1
+      i -= 1
+    else
+      if skip > 0
+        i -= skip
+        skip = 0
+      else
+        result = str[i] + result
+        i -= 1
+      end
+    end
   end
   result
 end
-
-factorial(4)
-# => 24
 ```
 
-Here we are using a while loop to count down from `n` to 1, updating our result
-in each iteration by multiplying it by the current value of `n`.
+Here, we're iterating through our string from back to front and using a
+placeholder variable (`skip`) to keep track of how many times we need to
+backspace by skipping over characters. If we don't need to backspace, we simply
+add the current character to our `result` variable.
 
-Now let's take a look at how we might instead use a `Stack` to solve this
-problem. Although we haven't implemented a `Stack` yet (you'll do that in the
-next lesson), we can capture the behavior of one by using the Ruby `Array`
-`push` and `pop` methods.
-
-Using a `Stack`, our solution might look like this:
+Now let's take a look at what this might look like if we use a `Stack`:
 
 ```rb
-def factorial(n)
+def evaluate_keystrokes(str)
   stack = []
-  result = 1
-  while n > 1 do
-    stack.push(n)
-    n -= 1
-  end
-  until stack.empty? do
-    result *= stack.pop
-  end
-  result
-end
+  i = 0
 
-factorial(4)
-# => 24
+  while i < str.size
+    if str[i] == "<"
+      stack.pop
+    else
+      stack.push(str[i])
+    end
+    i += 1
+  end
+
+  stack.join('')
+end
 ```
 
-First, we use a loop to count down from `n` to 1 and `push` each number onto our
-stack:
+With this code, every time we encounter the `<`, we "erase" the previous
+character by `pop`ping it off the stack. By the end, all the characters that
+don't get "erased" remain in the `stack`, so we simply join it into a string and
+return that value.
 
-![Pushing to the stack](https://curriculum-content.s3.amazonaws.com/phase-4/phase-4-data-structures-stack/stack-push.png)
+We can streamline our method even further by using a ternary expression:
 
-Then we use a second loop to `pop` each number in turn off the stack and
-multiply it by our running product:
+```rb
+def evaluate_keystrokes(str)
+  stack = []
+  i = 0
 
-![Popping off the stack](https://curriculum-content.s3.amazonaws.com/phase-4/phase-4-data-structures-stack/stack-pop.png)
+  while i < str.size
+    str[i] == "<" ? stack.pop : stack.push(str[i])
+    i += 1
+  end
 
-Note that we used this example to help get a sense of what a `Stack` is and how
-it may be used to solve a problem, not because this is the best way to solve
-this particular problem. If you notice, using a stack here did not buy us
-anything in terms of time complexity. In fact, this solution is a bit _worse_
-than the first one (although not enough to affect its big O). In the initial
-solution, we are using a loop to count down from `n` to 1, which gives us a time
-complexity of O(n). For our `Stack` solution, we are using **two** loops: one to
-add the numbers to the stack and a second to `pop` them back off and calculate
-our result. This gives a time complexity of O(2n), which simplifies to O(n).
+  stack.join('')
+end
+```
+
+This example problem is one that lends itself pretty naturally to using a
+`Stack`, resulting in code that is simpler and easier to read.
 
 ## Conclusion
 

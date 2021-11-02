@@ -29,13 +29,13 @@ last bin that was added; in other words, **First In, Last Out**. (You can also
 think of it as **Last In, First Out**; the two terms are equivalent.) The line
 of passengers waiting to pass through security would be our `Queue`: the first
 person to join the line will be the first one through the checkpoint
-(`First In, First Out`).
+(**First In, First Out**).
 
 It can be useful to think of a `Stack` as a vertical structure, like a stack of
 plates: we generally refer to adding items to, and removing them from, the _top_
-of the `Stack`.
+of the `Stack`:
 
-<!-- TODO: Add image here to visualize stack -->
+![Stack](https://curriculum-content.s3.amazonaws.com/phase-4/phase-4-data-structures-stack/stack.png)
 
 ### Stack vs. Array
 
@@ -45,13 +45,13 @@ you to add and remove values. In fact, one way to implement a `Stack` (although
 not generally the best way) is by using an array as the underlying data
 structure — you'll be doing that in the next lesson.
 
-`Stack`s have a few benefits for certain problems when compared to arrays.
+`Stack`s have several benefits for certain problems when compared to arrays.
 `Stack`s have a more limited set of methods for interacting with data compared
-to arrays — with a `Stack`, you can only interact with the element at the _top_,
-where as arrays also allow you to access and interact with elements at any
-random position. This restriction is actually a good thing when it comes to
-solving certain kinds of problems, since it can guide you to a more elegant and
-easy-to-understand solution.
+to arrays: with a `Stack`, you can only interact with the element at the _top_,
+whereas arrays allow you to access and interact with elements at _any_ position.
+This restriction is actually a good thing when it comes to solving certain kinds
+of problems, since it can guide you to a more elegant and easy-to-understand
+solution.
 
 ## Stack Methods
 
@@ -92,16 +92,10 @@ there's no reason you can't!
 ### Time Complexity of Stack Methods
 
 With the exception of `search`, all of the `Stack` methods listed above (for
-example, pushing an element onto the `Stack`) have time complexity of O(1). In
-many practical uses, you may iterate through some input, adding or removing
-items as you go. This process has linear complexity: one step for each element
-being added or removed.
+example, pushing an element onto the `Stack`) have time complexity of O(1). The
+time complexity for `search` is O(n).
 
-For example, if you use a `Stack` to reverse a string, you would iterate through
-the string and add each character to the `Stack`, which has a time complexity
-of O(n). Then, you would loop through the `Stack` to pop each character off and
-add it to the reversed string, again yielding a time complexity of O(n). This
-gives O(2n), which simplifies to O(n).
+Let's look at an example use of a `Stack`:
 
 ```rb
 def reverse_string(string)
@@ -120,12 +114,10 @@ reverse_string("hello")
 # => "olleh"
 ```
 
-With the above example, there is no real benefit in terms of time efficiency to
-using a `Stack` instead of simple iteration. However, the use of a `Stack` can
-be substantially more efficient with certain types of problems that would
-otherwise have quadratic runtimes. In some cases, the ability to hold on to
-interim values in the stack and retrieve them later can save us from having to
-use nested loops, reducing the time complexity from O(n^2) to O(n).
+Here we are iterating through the string and adding each character to the
+`Stack`, which has a time complexity of O(n). Then, we loop through the `Stack`,
+pop each character off and add it to the reversed string, again yielding a time
+complexity of O(n). This gives O(2n), which simplifies to O(n).
 
 ## When To Use a Stack
 
@@ -136,8 +128,8 @@ There are a number of practical use cases for a `Stack`. Some common ones includ
 - Browser history and back/forward buttons
 - Undo/redo in software programs
 
-A `Stack` can also be used to help traverse more complex data structures known
-as `Tree`s. (We'll learn about `Tree`s a bit later in this section.) For
+A `Stack` can also be used to help traverse a more complex data structure known
+as a `Tree`. (We'll learn about `Tree`s a bit later in this section.) For
 example, one common use of `Stack`s is in implementing a depth-first search
 through a `Tree`.
 
@@ -178,7 +170,7 @@ in each iteration by multiplying it by the current value of `n`.
 Now let's take a look at how we might instead use a `Stack` to solve this
 problem. Although we haven't implemented a `Stack` yet (you'll do that in the
 next lesson), we can capture the behavior of one by using the Ruby `Array`
-`push()` and `pop()` methods.
+`push` and `pop` methods.
 
 Using a `Stack`, our solution might look like this:
 
@@ -203,20 +195,22 @@ factorial(4)
 First, we use a loop to count down from `n` to 1 and `push` each number onto our
 stack:
 
-![Pushing to the stack](https://curriculum-content.s3.amazonaws.com/phase-4/data-structures-stack/stack-push.png)
+![Pushing to the stack](https://curriculum-content.s3.amazonaws.com/phase-4/phase-4-data-structures-stack/stack-push.png)
 
 Then we use a second loop to `pop` each number in turn off the stack and
 multiply it by our running product:
 
-![Popping off the stack](https://curriculum-content.s3.amazonaws.com/phase-4/data-structures-stack/stack-pop.png)
+![Popping off the stack](https://curriculum-content.s3.amazonaws.com/phase-4/phase-4-data-structures-stack/stack-pop.png)
 
-Note that using a stack here did not buy us anything in terms of time
-complexity. In fact, this solution is a bit _worse_ than the first one (although
-not enough to affect its big O). In the initial solution, we are using a loop to
-count down from `n` to 1, which gives us a time complexity of O(n). For our
-`Stack` solution, we are using **two** loops: one to add the numbers to the
-stack and a second to `pop` them back off and calculate our result. This gives a
-time complexity of O(2n), which simplifies to O(n).
+Note that we used this example to help get a sense of what a `Stack` is and how
+it may be used to solve a problem, not because this is the best way to solve
+this particular problem. If you notice, using a stack here did not buy us
+anything in terms of time complexity. In fact, this solution is a bit _worse_
+than the first one (although not enough to affect its big O). In the initial
+solution, we are using a loop to count down from `n` to 1, which gives us a time
+complexity of O(n). For our `Stack` solution, we are using **two** loops: one to
+add the numbers to the stack and a second to `pop` them back off and calculate
+our result. This gives a time complexity of O(2n), which simplifies to O(n).
 
 ## Conclusion
 

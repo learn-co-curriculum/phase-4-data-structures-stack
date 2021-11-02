@@ -184,49 +184,57 @@ placeholder variable (`skip`) to keep track of how many times we need to
 backspace by skipping over characters. If we don't need to backspace, we simply
 add the current character to our `result` variable.
 
-Now let's take a look at what this might look like if we use a `Stack`:
+Now let's take a look at how we might approach this problem using a `Stack`:
 
 ```rb
 def evaluate_keystrokes(str)
   stack = []
-  i = 0
 
-  while i < str.size
-    if str[i] == "<"
+  str.chars.each do |char|
+    if char == "<"
       stack.pop
     else
-      stack.push(str[i])
+      stack.push(char)
     end
-    i += 1
   end
 
-  stack.join('')
+  result = ""
+
+  until stack.empty?
+    result = stack.pop + result
+  end
+
+  result
 end
 ```
 
 With this code, every time we encounter the `<`, we "erase" the previous
 character by `pop`ping it off the stack. By the end, all the characters that
-don't get "erased" remain in the `stack`, so we simply join it into a string and
-return that value.
+don't get "erased" remain in the `stack`, so we simply `pop` them off and add them
+to the `result` string.
 
 We can streamline our method even further by using a ternary expression:
 
 ```rb
 def evaluate_keystrokes(str)
   stack = []
-  i = 0
 
-  while i < str.size
-    str[i] == "<" ? stack.pop : stack.push(str[i])
-    i += 1
+  str.chars.each do | char |
+    char == "<" ? stack.pop : stack.push(char)
   end
 
-  stack.join('')
+  result = ""
+
+  until stack.empty?
+    result = stack.pop + result
+  end
+
+  result
 end
 ```
 
-This example problem is one that lends itself pretty naturally to using a
-`Stack`, resulting in code that is simpler and easier to read.
+This problem is one that lends itself pretty naturally to using a `Stack`,
+resulting in code that is simpler and easier to read.
 
 ## Conclusion
 
